@@ -4,6 +4,7 @@
 #include<string.h>
 #include <vector>
 #include <list>
+#include "RepositoryFileCSV.h"
 using namespace std;
 Tests::Tests() {
 }
@@ -95,73 +96,45 @@ void Tests::testRepoFilePhone() {
 	v.push_back(c);
 	c = "cosmote";
 	v.push_back(c);
-	//assert(repof.getSize() == 0);
-	//repof.loadFromFile("Tests.txt");
 	assert(repof.getSize() == 4);
 	Phone a("aaa", "bbb", 1, v);
 	repof.addElem(a);
 	assert(repof.getSize() == 5);
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
 	assert(repof.findElem(a) == 4);
 	Phone b("abc", "aaa", 1, v);
 	assert(repof.findElem(b) == -1);
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
 	repof.deleteElem(a);
 	assert(repof.getSize() == 4);
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
 	list<Phone> rez = repof.getAll();
 	assert(rez.size() == 4);
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
 	repof.updateElem(Phone("bbb", "aaa", 1,v), b);
 	assert(repof.findElem(b) == 0);
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
-	assert(repof.getItemFromPos(0) == Phone("abc", "aaa", 1,v));
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
+	assert(repof.getItemFromPos(0) == Phone("abc", "aaa", 1, v));
 	assert(repof.getSize() == 4);
 
 }
-void Tests::testRepoFile() {
-	RepositoryFile<Serie> repof("Tests.txt", ' ');
+void Tests::testRepoFileCSV() {
+	RepositoryFileCSV<Serie> repof("Tests.csv");
 	vector<string> v;
 	string c;
 	c = "orange";
 	v.push_back(c);
 	c = "cosmote";
 	v.push_back(c);
-	//assert(repof.getSize() == 0);
-	//repof.loadFromFile("Tests.txt");
 	assert(repof.getSize() == 4);
 	Serie a("aaa", "bbb", 1);
 	repof.addElem(a);
 	assert(repof.getSize() == 5);
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
 	assert(repof.findElem(a) == 4);
 	Serie b("abc", "aaa", 1);
 	assert(repof.findElem(b) == -1);
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
 	repof.deleteElem(a);
 	assert(repof.getSize() == 4);
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
 	list<Serie> rez = repof.getAll();
 	assert(rez.size() == 4);
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
 	repof.updateElem(Serie("bbb", "aaa", 1), b);
 	assert(repof.findElem(b) == 0);
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
 	assert(repof.getItemFromPos(0) == Serie("abc", "aaa", 1));
-	//repof.saveToFile();
-	//repof.loadFromFile("Tests.txt", ' ');
 	assert(repof.getSize() == 4);
 }
 void Tests::testRepoFileSerie() {
@@ -172,8 +145,6 @@ void Tests::testRepoFileSerie() {
 	//v.push_back(c);
 	//c = "cosmote";
 	//v.push_back(c);
-	////assert(repof.getSize() == 0);
-	////repof.loadFromile("Tests.txt");
 	//assert(repof.getSize() == 4);
 	//Phone* p = new Phone("aaa", "bbb", 1, v);
 	//repof.addElem(p);
@@ -210,8 +181,6 @@ void Tests::testRepoFileSerie() {
 	c = "cosmote";
 	v.push_back(c);
 	cout << "aici";
-	//assert(repof.getSize() == 0);
-	//repof.loadFromile("Tests.txt");
 	assert(repof.getSize() == 4);
 	Phone p = Phone("aaa", "bbb", 1, v);
 	repof.addElem(p);
@@ -245,7 +214,7 @@ void Tests::testRepoFileSerie() {
 Tests::~Tests() {
 }
 void Tests::testService() {
-	RepositoryFile<Phone> repof("Tests.txt", ' ');
+	RepositoryFile<Serie> repof("Tests.txt", ' ');
 	RepositoryFile<User> repo("Users.txt",' ');
 	Service serv(repof, repo);
 	User u1("ana", "1234");
@@ -275,19 +244,3 @@ void Tests::testService() {
 	//assert(serv.findElem(e0) == -1);
 	//serv.updateEntity(e1, "aha", "aaa", "free");
 	//assert(strcmp(serv.getItemFromPos(0).getUnits(), "free") == 0);
-	//Phone e("aha", "aaa", "free");
-//	try {
-//		serv.intrare(e);
-//		assert(strcmp(serv.getItemFromPos(0).getUnits(), "occupied") == 0);
-//		serv.intrare(e3);
-//		serv.intrare(e4);
-//	}
-//	catch (exception e) { cout << endl; }
-//	e.setStatus("occupied");
-//	try {
-//		serv.iesire(e);
-//		assert(strcmp(serv.getItemFromPos(0).getUnits(), "free") == 0);
-//	}
-//	catch (exception e) { cout << endl; }
-//	assert(serv.maxEntitys() == 1);
-//}

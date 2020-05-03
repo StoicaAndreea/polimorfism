@@ -168,6 +168,8 @@
     <ClInclude Include="PhoneValidator.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="RepositoryFile.h" />
+    <ClInclude Include="RepositoryFileCSV.h" />
+    <ClInclude Include="RepositoryFileHTML.h" />
     <ClInclude Include="Serie.h" />
     <ClInclude Include="SerieValidator.h" />
     <ClInclude Include="Service.h" />

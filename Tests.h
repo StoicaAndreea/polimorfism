@@ -19,7 +19,7 @@ public:
 	//void testRepoFile();
 	void testRepoFilePhone();
 	void testRepoFileSerie();
-	void testRepoFile();
+	void testRepoFileCSV();
 	void testService();
 	~Tests();
 };

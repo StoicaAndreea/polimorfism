@@ -2,27 +2,27 @@
 #include "Repository.h"
 #include"RepositoryFile.h"
 #include"User.h"
-#include"Phone.h"
+#include"Serie.h"
 #include"Phone.h"
 #include"Drone.h"
 
 class Service
 {
 private:
-	RepositoryTemplate<Phone>& repo;
+	RepositoryTemplate<Serie>& repo;
 	RepositoryTemplate<User>& repoUser;
 	User activeUser;
 public:
 	//Service();
-	Service(RepositoryTemplate<Phone> &r, RepositoryTemplate<User> &rep) :repo(r), repoUser(rep) { repo = r; repoUser = rep; };
+	Service(RepositoryTemplate<Serie> &r, RepositoryTemplate<User> &rep) :repo(r), repoUser(rep) { repo = r; repoUser = rep; };
 	bool login(string, string);
 	bool logedIn();
 	void logout(/*string, string*/);
 	//void loadFromFile(string, char);
-	list<Phone> getAllSeries();
+	list<Serie> getAllSeries();
 	int getSize();
-	Phone getItemFromPos(int);
-		//vector<Phone> getAllPhones();
+	Serie getItemFromPos(int);
+		//vector<Serie> getAllPhones();
 	~Service();
 };
 

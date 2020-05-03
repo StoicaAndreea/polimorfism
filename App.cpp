@@ -8,6 +8,8 @@
 #include"UI.h"
 using namespace std;
 #include <iostream>
+#include "RepositoryFileCSV.h"
+#include "RepositoryFileHTML.h"
 
 int main()
 {
@@ -17,15 +19,17 @@ int main()
     test.testDomainDrone();
     //test.testRepoTemplate();
    //test.testRepoFilePhone();
-    //test.testRepoFile();
-    test.testRepoFileSerie();
+    test.testRepoFileCSV();
+   // test.testRepoFileSerie();
     //test.testService();
     cout << "succes" << endl;
-    /*RepositoryFile<Phone> repof("Tests.txt",' ');
+    //RepositoryFile<Serie> repof("Tests.txt",' ');
+    //RepositoryFileCSV<Serie>repof("Tests.csv");
+    RepositoryFileHTML<Serie>repof("Tests.html");
     RepositoryFile<User> repo("Users.txt", ' ');
     Service serv(repof, repo);
     UI ui(serv);
-    ui.showUI();*/
+    ui.showUI();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
