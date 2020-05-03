@@ -11,11 +11,11 @@ protected:
 	list<T> elem;
 public:
 	RepositoryTemplate<T>() {}
-	virtual int addElem(const T&);
-	virtual int deleteElem(const T&);
-	int findElem(const T&);
+	virtual int addElem(T&);
+	virtual int deleteElem(T&);
+	int findElem(T&);
 	int getSize();
-	virtual void updateElem(const T& s, const T nou);
+	virtual void updateElem(T s,T& nou);
 	list<T> getAll();
 	T getItemFromPos(int);
 	void clearElem();
@@ -27,7 +27,7 @@ public:
 
 
 template<class T>
-int RepositoryTemplate<T>::addElem(const T& e)
+int RepositoryTemplate<T>::addElem(T& e)
 {
 	typename list<T>::iterator it;
 	it = find(elem.begin(), elem.end(), e);
@@ -40,7 +40,7 @@ int RepositoryTemplate<T>::addElem(const T& e)
 }
 
 template<class T>
-int RepositoryTemplate<T>::deleteElem(const T& e)
+int RepositoryTemplate<T>::deleteElem(T& e)
 {
 	typename list<T>::iterator it;
 	it = find(elem.begin(), elem.end(), e);
@@ -53,7 +53,7 @@ int RepositoryTemplate<T>::deleteElem(const T& e)
 }
 
 template<class T>
-int RepositoryTemplate<T>::findElem(const T& e)
+int RepositoryTemplate<T>::findElem(T& e)
 {
 	typename list<T>::iterator it;
 	int i = 0;
@@ -76,7 +76,7 @@ int RepositoryTemplate<T>::getSize()
 }
 
 template<class T>
-void RepositoryTemplate<T>::updateElem(const T& vechi, const T nou)
+void RepositoryTemplate<T>::updateElem(T vechi,T& nou)
 {
 	replace(elem.begin(), elem.end(), vechi, nou);
 

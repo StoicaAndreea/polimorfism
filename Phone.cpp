@@ -9,7 +9,7 @@ Phone::Phone():Serie(){
 	//this->operators = {};
 }
 
-Phone::Phone(const char* producer, const char* model, int units, vector<char*>operators):Serie(producer,model, units){
+Phone::Phone(const char* producer, const char* model, int units, vector<string>operators):Serie(producer,model, units){
 	/*if (producer) {
 		this->producer = new char[strlen(producer) + 1];
 		strcpy_s(this->producer, strlen(producer) + 1, producer);
@@ -35,60 +35,41 @@ Phone::Phone(const Phone& e):Serie(e) {
 	this->operators = e.operators;
 }
 
-Phone::Phone(string line) {
-	std::istringstream iss(line);
-	string tok1, tok2, tok3, tok4;
-	iss >> tok1 >> tok2 >> tok3>> tok4;
-	this->producer = new char[tok1.length() + 1];
-	strcpy_s(this->producer, tok1.length() + 1, tok1.c_str());
-	this->model = new char[tok2.length() + 1];
-	strcpy_s(this->model, tok2.length() + 1, tok2.c_str());
-	this->units = stoi(tok3);
-	
-	std::string delim = "-";
-	//cout << tok4 << endl;
+Phone::Phone(string line, char delim) {
+	vector<string> tokens = splitLine(line, delim);
+	this->producer = new char[tokens[0].length() + 1];
+	strcpy_s(this->producer, tokens[0].length() + 1, tokens[0].c_str());
 
-	//size_t pos = 0;
-	std::string token;
-	//while ((pos = tok4.find(delimiter)) != std::string::npos) {
-	//	token = tok4.substr(0, pos);
-	//	cout <<"token:"<< token << endl;
-	//	char* c = new char[sizeof(token)+1];
-	//	for (int i = 0; i < sizeof(token); i++) {
-	//		c[i] = token[i];
-	//		//cout << c[i];
-	//	}
-	//	this->operators.push_back(c);
-	//	//cout << this->operators[0]<<endl;
-	//	tok4.erase(0, pos + delimiter.length());
-	//	delete[] c;
-	//}
-	//char* c = new char[sizeof(token) + 1];
-	//for (int i = 0; i < sizeof(token); i++) {
-	//	c[i] = token[i];
-	//}
-	//if(c) this->operators.push_back(c);
-	//delete[]c;
+	this->model = new char[tokens[1].length() + 1];
+	strcpy_s(this->model, tokens[1].length() + 1, tokens[1].c_str());
 
-	size_t prev = 0, pos = 0;
-	do
-	{
-		pos = tok4.find(delim, prev);
-		if (pos == string::npos) pos = tok4.length();
-		{string token = tok4.substr(prev, pos - prev);
-		}
-		if (!token.empty()) { 
-			char* c = new char[sizeof(token) + 1];
-			for (int i = 0; i < sizeof(token); i++) {
-				c[i] = token[i];
-			}
-			if (c) { this->operators.push_back(c);}
-			delete[] c;
-		}
-		prev = pos + delim.length();
-	} while (pos < tok4.length() && prev < tok4.length());
-	cout << "hihi";
-	//AICI TREBUIE GANDITTT
+	units = stoi(tokens[2]);
+
+	vector <string> tok = splitLine(tokens[3],'-');
+	for (int i = 0; i < tok.size(); i++) {
+		//char *c= new char[tok[i].length() + 1];
+		//strcpy_s(c, tok[i].length() + 1, tok[i].c_str());
+		this->operators.push_back(tok[i]);
+	}
+}
+
+void Phone::fromString(string line, char delim) {
+	//Phone(line, delim);
+	vector<string> tokens = splitLine(line, delim);
+	this->producer = new char[tokens[0].length() + 1];
+	strcpy_s(this->producer, tokens[0].length() + 1, tokens[0].c_str());
+
+	this->model = new char[tokens[1].length() + 1];
+	strcpy_s(this->model, tokens[1].length() + 1, tokens[1].c_str());
+
+	units = stoi(tokens[2]);
+
+	vector <string> tok = splitLine(tokens[3], '-');
+	for (int i = 0; i < tok.size(); i++) {
+		//char *c= new char[tok[i].length() + 1];
+		//strcpy_s(c, tok[i].length() + 1, tok[i].c_str());
+		this->operators.push_back(tok[i]);
+	}
 }
 Serie* Phone::clone() {
 	Phone* newSerie = new Phone();
@@ -109,7 +90,7 @@ Serie* Phone::clone() {
 //int Phone::getUnits() {
 //	return this->units;
 //}
-vector<char*> Phone::getOperators() {
+vector<string> Phone::getOperators() {
 	return this->operators;
 }
 
@@ -132,7 +113,7 @@ vector<char*> Phone::getOperators() {
 //void Phone::setUnits(int units) {
 //	this->units = units;
 //}
-void Phone::setOperators(vector<char*> operators) {
+void Phone::setOperators(vector<string> operators) {
 	this->operators =operators;
 }
 Phone::~Phone() {
@@ -174,6 +155,28 @@ Phone& Phone::operator =(const Phone& e) {
 //	return (strcmp(this->producer, e.producer) < 0);
 //}
 
+string Phone::toString() {
+	string x, y,s;
+	x = this->producer;
+	y = this->model;
+	s = this->operators[0];
+	for (int i = 1; i < this->operators.size(); i++)
+	{
+		s =s+"-"+ this->operators[i];
+	}
+	return  x + " " + y + " " + to_string(this->units)+" "+s;
+}
+string Phone::toStringDelimiter(char delim) {
+	string x, y,s;
+	x = this->producer;
+	y = this->model;
+	s = this->operators[0];
+	for (int i = 1; i < this->operators.size(); i++)
+	{
+		s = s + "-" + this->operators[i];
+	}
+	return  x + delim + y + delim + to_string(this->units) + delim + s;
+}
 ostream& operator<<(ostream& os, Phone e) {
 	os << e.producer << " " << e.model << " " << e.units << " "; //<< endl;
 	for (int i = 0; i < e.operators.size() - 1; i++)
@@ -194,7 +197,7 @@ istream& operator >>(istream& is, Phone& e) {
 	int units;
 	is >> units;
 	int ok = 0;
-	vector<char*> operators;
+	vector<string> operators;
 	cout << "Give the operators";
 	char* op = new char[10];
 	is >> op;

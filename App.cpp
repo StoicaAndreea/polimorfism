@@ -14,11 +14,18 @@ int main()
     cout << "start"<<endl;
     Tests test;
     test.testDomainPhone();
-   // test.testDomainDrone();
-  // test.testRepoTemplate();
-   //test.testRepoFile();
-  // test.testRepoFilePhone();
+    test.testDomainDrone();
+    //test.testRepoTemplate();
+   //test.testRepoFilePhone();
+    //test.testRepoFile();
+    test.testRepoFileSerie();
+    //test.testService();
     cout << "succes" << endl;
+    /*RepositoryFile<Phone> repof("Tests.txt",' ');
+    RepositoryFile<User> repo("Users.txt", ' ');
+    Service serv(repof, repo);
+    UI ui(serv);
+    ui.showUI();*/
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

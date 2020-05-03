@@ -16,8 +16,10 @@ public:
 	void testDomainDrone();
 	//void testDomainSerie();
 	void testRepoTemplate();
-	void testRepoFile();
+	//void testRepoFile();
 	void testRepoFilePhone();
-	//void testService();
+	void testRepoFileSerie();
+	void testRepoFile();
+	void testService();
 	~Tests();
 };

@@ -12,14 +12,14 @@ class RepositoryFile :public RepositoryTemplate<T>
 {
 private:
 	const char* fileName;
-	const char* outputFile;
+	char delim;
 public:
 	RepositoryFile();
-	RepositoryFile(const char*, const char*);
-	int addElem(const T&);
-	int deleteElem(const T&);
-	void updateElem(const T&, const T);
-	void loadFromFile(const char*);
+	RepositoryFile(const char*, const char);
+	int addElem( T&);
+	int deleteElem(T&);
+	void updateElem(T,T&);
+	void loadFromFile(const char*, const char);
 	void saveToFile();
 	~RepositoryFile();
 };
@@ -28,76 +28,32 @@ template<class T>
 RepositoryFile<T>::RepositoryFile() :RepositoryTemplate<T>()
 {
 	fileName = "";
-	outputFile = "";
+	delim = ' ';
 }
 template<class T>
-RepositoryFile<T>::RepositoryFile(const char* fileName, const char* outputFile)
+RepositoryFile<T>::RepositoryFile(const char* fileName, const char delim)
 {
 	this->fileName = fileName;
-	this->outputFile=outputFile;
-	loadFromFile(fileName);
-	//RepositoryTemplate::clearElem();
-	//fis = fileName;
-	//ifstream f(fileName);
-	//string linie;
-	//char* name = new char[10];
-	//char* numar = new char[10];
-	//char* status = new char[10];
-	//while (!f.eof()) {
-	//	f >> name >> numar >> status;
-	//	if (name != "") {
-	//		Entity e(name, numar, status);
-	//		//elem.push_back(e);
-	//		RepositoryTemplate::addElem(e);
-
-	//	}
-	//}
-	//delete[] name;
-	//delete[] numar;
-	//delete[] status;
-	//f.close();
+	loadFromFile(fileName, delim);
 }
 
 template<class T>
-void RepositoryFile<T>::loadFromFile(const char* fileName)
+void RepositoryFile<T>::loadFromFile(const char* fileName, const char delim)
 {
-	////elem.clear();
-	//RepositoryTemplate::clearElem();
-	//fis = fileName;
-	//ifstream f(fileName);
-	//char* name = new char[10];
-	//char* numar = new char[10];
-	//char* status = new char[10];
-	//while (!f.eof())
-	//{
-	//	f >> name >> numar >> status;
-	//	if (strcmp(name, "") != 0)
-	//	{
-	//		T t;
-	//		//Entity e(name, numar, status);
-	//		//elem.push_back(e);
-	//		RepositoryTemplate::addElem(t);
-	//	}
-	//}
-	//delete[] name;
-	//delete[] numar;
-	//delete[] status;
-	//f.close();
 	if (fileName == NULL)
 		return;
 	try {
 		this->fileName = fileName;
+		this->delim = delim;
 		std::ifstream inf(this->fileName);
 		RepositoryTemplate<T>::clearElem();
 		string line;
 		if (inf.is_open()) {
 			while (getline(inf, line))
 			{
-				//T t;
-				//std::string inStr;
-				//t.fromString(inStr);
-				this->addElem(T(line));
-				//cout << line << endl;
+				T ob;
+				ob.fromString(line, delim);
+				RepositoryTemplate<T>::addElem(ob);
 			}
 			inf.close();
 		}
@@ -110,33 +66,14 @@ void RepositoryFile<T>::loadFromFile(const char* fileName)
 template<class T>
 void RepositoryFile<T>::saveToFile()
 {
-	/*ofstream f(fis);
-	typename list<T>::iterator it;
-	list<T> elem = RepositoryTemplate::getAll();
-	for (it = elem.begin(); it != elem.end(); ++it)
-	{
-		f << *it;
-	}
-	f.close();*/
 	if (this->fileName == NULL)
 		return;
 	std::ofstream out(this->fileName);
-	//out << this->dim() << '\n';
 	for (T t : this->getAll())
 	{
-		out << t;// << '\n';
+		out << t.toStringDelimiter(this->delim)<< '\n';
 	}
 	out.close();
-
-	if (this->outputFile == NULL)
-		return;
-	std::ofstream ou(this->outputFile);
-	//out << this->dim() << '\n';
-	for (T t : this->getAll())
-	{
-		ou << t;// << '\n';
-	}
-	ou.close();
 }
 
 template<class T>
@@ -146,7 +83,7 @@ RepositoryFile<T>::~RepositoryFile()
 }
 
 template<class T>
-int RepositoryFile<T>::addElem(const T& e) {
+int RepositoryFile<T>::addElem(T& e) {
 	int r = RepositoryTemplate<T>::addElem(e);
 	if (r != -1) {
 		saveToFile();
@@ -156,7 +93,7 @@ int RepositoryFile<T>::addElem(const T& e) {
 }
 
 template<class T>
-int RepositoryFile<T>::deleteElem(const T& e) {
+int RepositoryFile<T>::deleteElem(T& e) {
 	int r = RepositoryTemplate<T>::deleteElem(e);
 	if (r != 0) {
 		saveToFile();
@@ -166,7 +103,7 @@ int RepositoryFile<T>::deleteElem(const T& e) {
 		return -1;
 }
 template<class T>
-void RepositoryFile<T>::updateElem(const T& e, const T n)
+void RepositoryFile<T>::updateElem(T e,T& n)
 {
 	RepositoryTemplate<T>::updateElem(e, n);
 	saveToFile();

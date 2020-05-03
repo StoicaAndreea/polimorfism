@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Serie">
+    <Position X="1.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAIAAAAEQEAAAAEABBRAAAAAQAAAQAAAgEBAIAAE=</HashCode>
+      <FileName>Serie.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Phone">
+    <Position X="2.75" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAIAEAABAAAAAAAAAAAACAgMAAAAAA=</HashCode>
+      <FileName>Phone.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Drone">
+    <Position X="0.5" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAABgAAAAAAAAAAAAEAABAAAAAAAAIAAAAAhEAAAABA=</HashCode>
+      <FileName>Drone.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="User">
+    <Position X="3.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAABAEAIBQEAAAAAAAAAAAAAAgEQAIA=</HashCode>
+      <FileName>User.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RepositoryTemplate&lt;T&gt;">
+    <Position X="6" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QABIQAAAAJAACAAAAAAAAAAAAAAAAAAAgAAABAIAAIA=</HashCode>
+      <FileName>Repository.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RepositoryFile&lt;T&gt;">
+    <Position X="5.75" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAABAAAAAAAAAQAAAgAAAAAAAAAEIQBAAEAAA=</HashCode>
+      <FileName>RepositoryFile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Service">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAIABACAAAAEAAAAAAAICQAAAAAEAIAAAEAA=</HashCode>
+      <FileName>Service.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UI">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAgAAAAAAAAAAAAAAIAAAAAAAAAoAAAAAAEAI=</HashCode>
+      <FileName>UI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

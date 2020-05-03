@@ -150,28 +150,49 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Phone.cpp" />
+    <ClCompile Include="PhoneValidator.cpp" />
     <ClCompile Include="Repository.cpp" />
     <ClCompile Include="RepositoryFile.cpp" />
     <ClCompile Include="Serie.cpp" />
+    <ClCompile Include="SerieValidator.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Tests.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="User.cpp" />
+    <ClCompile Include="Utile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h" />
+    <ClInclude Include="DroneValidator.h" />
     <ClInclude Include="Phone.h" />
+    <ClInclude Include="PhoneValidator.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="RepositoryFile.h" />
     <ClInclude Include="Serie.h" />
+    <ClInclude Include="SerieValidator.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="Tests.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="User.h" />
+    <ClInclude Include="UserValidator.h" />
+    <ClInclude Include="Utile.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Tests.txt" />
+    <Text Include="Users.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Tests.csv" />
+    <None Include="Tests.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="XMLSchema.xsd">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Xsd>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

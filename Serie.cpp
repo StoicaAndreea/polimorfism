@@ -32,16 +32,25 @@ Serie::Serie(const Serie& e) {
 	}
 }
 
-Serie::Serie(string line) {
-	std::istringstream iss(line);
-	string tok1, tok2, tok3, tok4;
-	iss >> tok1 >> tok2 >> tok3;
-	this->producer = new char[tok1.length() + 1];
-	strcpy_s(this->producer, tok1.length() + 1, tok1.c_str());
-	this->model = new char[tok2.length() + 1];
-	strcpy_s(this->model, tok2.length() + 1, tok2.c_str());
-	this->units = stoi(tok3);
-	//AICI TREBUIE GANDITTT
+Serie::Serie(string line,char delim) {
+	vector<string> tokens = splitLine(line, delim);
+	this->producer = new char[tokens[0].length() + 1];
+	strcpy_s(this->producer, tokens[0].length() + 1, tokens[0].c_str());
+
+	this->model = new char[tokens[1].length() + 1];
+	strcpy_s(this->model, tokens[1].length() + 1, tokens[1].c_str());
+	units = stoi(tokens[2]);
+}
+
+void Serie::fromString(string line, char delim) {
+	//Serie(line, delim);
+	vector<string> tokens = splitLine(line, delim);
+	this->producer = new char[tokens[0].length() + 1];
+	strcpy_s(this->producer, tokens[0].length() + 1, tokens[0].c_str());
+
+	this->model = new char[tokens[1].length() + 1];
+	strcpy_s(this->model, tokens[1].length() + 1, tokens[1].c_str());
+	units = stoi(tokens[2]);
 }
 Serie::~Serie() {
 	if (this->producer) {
@@ -53,7 +62,7 @@ Serie::~Serie() {
 		this->model = NULL;
 	}
 }
-Serie* Serie:: clone() {
+Serie* Serie::clone() {
 	Serie* newSerie = new Serie();
 	newSerie->setProducer(this->producer);
 	newSerie->setModel(this->model);
@@ -118,8 +127,20 @@ bool Serie::operator==(const Serie& e) {
 bool Serie::operator<(const Serie& e) {
 	return (strcmp(this->producer, e.producer) < 0);
 }
+string Serie::toString() {
+	string x, y;
+	x = this->producer;
+	y = this->model;
+	return  x + " " + y + " " + to_string(this->units);
+}
+string Serie::toStringDelimiter(char delim) {
+	string x, y;
+	x = this->producer;
+	y = this->model;
+	return  x + delim + y + delim + to_string(this->units);
+}
 ostream& operator<<(ostream& os, Serie e) {
-	os << e.producer << " " << e.model << " " << e.units<< endl;
+	os << e.producer << " " << e.model << " " << e.units << endl;
 	return os;
 }
 

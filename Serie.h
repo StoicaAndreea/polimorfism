@@ -1,4 +1,5 @@
 #pragma once
+#include "Utile.h"
 #include<string>
 #include<iostream>
 using namespace std;
@@ -15,7 +16,8 @@ public:
 	Serie(const char*, const char*, int);
 	Serie(const Serie&);
 	virtual Serie& operator= (const Serie&);
-	Serie(string); //conversion
+	Serie(string, char); //conversion
+	virtual void fromString(string, char);
 	virtual ~Serie();
 	virtual Serie* clone();
 	char* getProducer();
@@ -29,5 +31,7 @@ public:
 	virtual bool operator <(const Serie&);
 	friend ostream& operator <<(ostream& os, Serie e);
 	friend istream& operator >>(istream& is, Serie& e);
+	virtual string toString();
+	virtual string toStringDelimiter(char);
 };
 #endif

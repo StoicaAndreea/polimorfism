@@ -15,7 +15,8 @@ public:
 	Drone();
 	Drone(const char*, const char*, int, int);
 	Drone(const Drone&);
-	Drone(string);//conversion
+	Drone(string,char);//conversion
+	void fromString(string,char);
 	~Drone();
 	Serie* clone();
 	/*char* getProducer();
@@ -34,6 +35,7 @@ public:
 
 	friend ostream& operator <<(ostream& os, Drone e);
 	friend istream& operator >> (istream& is, Drone& e);
-
+	string toString();
+	string toStringDelimiter(char);
 };
 #endif

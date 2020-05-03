@@ -34,16 +34,27 @@ Drone::Drone(const Drone&e):Serie(e) {
 	this->rotors = e.rotors;
 }
 
-Drone::Drone(string line) {
-	std::istringstream iss(line);
-	string tok1, tok2, tok3, tok4;
-	iss >> tok1 >> tok2 >> tok3>>tok4;
-	this->producer = new char[tok1.length() + 1];
-	strcpy_s(this->producer, tok1.length() + 1, tok1.c_str());
-	this->model = new char[tok2.length() + 1];
-	strcpy_s(this->model, tok2.length() + 1, tok2.c_str());
-	this->units = stoi(tok3);
-	this->rotors = stoi(tok4);
+Drone::Drone(string line,char delim) {
+	vector<string> tokens = splitLine(line, delim);
+	this->producer= new char[tokens[0].length() + 1];
+	strcpy_s(this->producer, tokens[0].length() + 1, tokens[0].c_str());
+
+	this->model = new char[tokens[1].length() + 1];
+	strcpy_s(this->model, tokens[1].length() + 1, tokens[1].c_str());
+	units = stoi(tokens[2]);
+	rotors = stoi(tokens[3]);
+}
+
+void Drone::fromString(string line, char delim) {
+	//Drone(line, delim);
+	vector<string> tokens = splitLine(line, delim);
+	this->producer = new char[tokens[0].length() + 1];
+	strcpy_s(this->producer, tokens[0].length() + 1, tokens[0].c_str());
+
+	this->model = new char[tokens[1].length() + 1];
+	strcpy_s(this->model, tokens[1].length() + 1, tokens[1].c_str());
+	units = stoi(tokens[2]);
+	rotors = stoi(tokens[3]);
 }
 Drone::~Drone() {
 	if (this->producer) {
@@ -118,6 +129,18 @@ Drone& Drone::operator =(const Drone& e) {
 	this->rotors = e.rotors;
 }
 
+string Drone::toString() {
+	string x, y;
+	x = this->producer;
+	y = this->model;
+	return  x+ " " + y + " " + to_string(this->units) + " " + to_string(this->rotors);
+}
+string Drone::toStringDelimiter(char delim) {
+	string x, y;
+	x = this->producer;
+	y = this->model;
+	return  x + delim + y + delim + to_string(this->units) + delim + to_string(this->rotors);
+}
 //bool Drone::operator ==(const Drone& e) {
 //	if (this->producer and e.producer and this->model and e.model) {
 //		return (strcmp(this->producer, e.producer) == 0) and (strcmp(this->model, e.model) == 0) and (this->units == e.units);
