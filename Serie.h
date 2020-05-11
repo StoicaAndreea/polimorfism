@@ -17,7 +17,7 @@ public:
 	Serie(const Serie&);
 	virtual Serie& operator= (const Serie&);
 	Serie(string, char); //conversion
-	virtual void fromString(string, char);
+	//virtual void fromString(string, char);
 	virtual ~Serie();
 	virtual Serie* clone();
 	char* getProducer();

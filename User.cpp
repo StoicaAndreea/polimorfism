@@ -23,6 +23,14 @@ void User::fromString(string line, char delim) {
 	this->userName = tokens[0];
 	this->password = tokens[1];
 }
+
+User* User::clone() {
+	User* newUser = new User();
+	newUser->setUserName(this->userName);
+	newUser->setPassword(this->password);
+	return newUser;
+}
+
 string User::getUserName()
 {
 	return userName;

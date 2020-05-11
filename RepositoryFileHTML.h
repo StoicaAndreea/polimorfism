@@ -12,12 +12,13 @@ class RepositoryFileHTML :public RepositoryTemplate<T>
 {
 private:
 	const char* fileName;
+	Serializer<T>* s;
 public:
 	RepositoryFileHTML();
-	RepositoryFileHTML(const char*);
-	int addElem(T&);
-	int deleteElem(T&);
-	void updateElem(T, T&);
+	RepositoryFileHTML(const char*, Serializer<T>*sr);
+	int addElem(T);
+	int deleteElem(T);
+	void updateElem(T, T);
 	void loadFromFile(const char*);
 	void saveToFile();
 	~RepositoryFileHTML();
@@ -29,9 +30,10 @@ RepositoryFileHTML<T>::RepositoryFileHTML() :RepositoryTemplate<T>()
 	fileName = "";
 }
 template<class T>
-RepositoryFileHTML<T>::RepositoryFileHTML(const char* fileName)
+RepositoryFileHTML<T>::RepositoryFileHTML(const char* fileName, Serializer<T>* sr)
 {
 	this->fileName = fileName;
+	s = sr;
 	loadFromFile(fileName);
 }
 
@@ -48,9 +50,7 @@ void RepositoryFileHTML<T>::loadFromFile(const char* fileName)
 		if (inf.is_open()) {
 			while (getline(inf, line))
 			{
-				T ob;
-				ob.fromString(line, '/');
-				RepositoryTemplate<T>::addElem(ob);
+				RepositoryTemplate<T>::addElem(s->fromString(line,'/'));
 			}
 			inf.close();
 		}
@@ -68,7 +68,7 @@ void RepositoryFileHTML<T>::saveToFile()
 	std::ofstream out(this->fileName);
 	for (T t : this->getAll())
 	{
-		out << t.toStringDelimiter('/') << '\n';
+		out << t->toStringDelimiter('/') << '\n';
 	}
 	out.close();
 }
@@ -76,11 +76,10 @@ void RepositoryFileHTML<T>::saveToFile()
 template<class T>
 RepositoryFileHTML<T>::~RepositoryFileHTML()
 {
-
 }
 
 template<class T>
-int RepositoryFileHTML<T>::addElem(T& e) {
+int RepositoryFileHTML<T>::addElem(T e) {
 	int r = RepositoryTemplate<T>::addElem(e);
 	if (r != -1) {
 		saveToFile();
@@ -90,17 +89,17 @@ int RepositoryFileHTML<T>::addElem(T& e) {
 }
 
 template<class T>
-int RepositoryFileHTML<T>::deleteElem(T& e) {
+int RepositoryFileHTML<T>::deleteElem(T e) {
 	int r = RepositoryTemplate<T>::deleteElem(e);
+	saveToFile();
 	if (r != 0) {
-		saveToFile();
 		return 0;
 	}
 	else
 		return -1;
 }
 template<class T>
-void RepositoryFileHTML<T>::updateElem(T e, T& n)
+void RepositoryFileHTML<T>::updateElem(T e, T n)
 {
 	RepositoryTemplate<T>::updateElem(e, n);
 	saveToFile();

@@ -6,7 +6,7 @@ using namespace std;
 
 class SerieException
 {
-protected:
+private:
     vector<string>errors;
 public:
     SerieException(vector<string> _errors);
@@ -15,6 +15,6 @@ public:
 
 class SerieValidator {
 public:
-    SerieValidator(){}
-    void validate(Serie& m);
+    SerieValidator() {};
+    void validate(Serie*& m);
 };

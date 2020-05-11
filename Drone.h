@@ -16,7 +16,7 @@ public:
 	Drone(const char*, const char*, int, int);
 	Drone(const Drone&);
 	Drone(string,char);//conversion
-	void fromString(string,char);
+	//void fromString(string,char);
 	~Drone();
 	Serie* clone();
 	/*char* getProducer();

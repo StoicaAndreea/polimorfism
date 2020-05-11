@@ -1,5 +1,5 @@
 #pragma once
-#include"Phone.h"
+#include"Serie.h"
 #include<iterator>
 #include <list>
 #include <algorithm>
@@ -11,11 +11,11 @@ protected:
 	list<T> elem;
 public:
 	RepositoryTemplate<T>() {}
-	virtual int addElem(T&);
-	virtual int deleteElem(T&);
-	int findElem(T&);
+	virtual int addElem(T);
+	virtual int deleteElem(T);
+	int findElem(T);
 	int getSize();
-	virtual void updateElem(T s,T& nou);
+	virtual void updateElem(T s,T nou);
 	list<T> getAll();
 	T getItemFromPos(int);
 	void clearElem();
@@ -27,39 +27,61 @@ public:
 
 
 template<class T>
-int RepositoryTemplate<T>::addElem(T& e)
+int RepositoryTemplate<T>::addElem(T e)
 {
-	typename list<T>::iterator it;
+	/*typename list<T>::iterator it;
 	it = find(elem.begin(), elem.end(), e);
 	if (it == elem.end())
 	{
 		elem.push_back(e);
 		return 0;
 	}
-	return -1;
+	return -1;*/
+
+	typename list<T>::iterator it;
+	for (it = elem.begin(); it != elem.end(); ++it)
+	{
+		if ((*it)->toString() == e->toString())
+		{
+			return -1;
+		}
+	}
+	elem.push_back(e->clone());
+	return 0;
 }
 
 template<class T>
-int RepositoryTemplate<T>::deleteElem(T& e)
+int RepositoryTemplate<T>::deleteElem(T e)
 {
-	typename list<T>::iterator it;
+	/*typename list<T>::iterator it;
 	it = find(elem.begin(), elem.end(), e);
 	if (it != elem.end())
 	{
 		elem.erase(it);
 		return 0;
 	}
+	return -1;*/
+	typename list<T>::iterator it;
+	for (it = elem.begin(); it != elem.end(); ++it)
+	{
+		if ((*it)->toString() == e->toString())
+		{
+			elem.erase(it);
+			return 0;
+		}
+	}
 	return -1;
 }
 
 template<class T>
-int RepositoryTemplate<T>::findElem(T& e)
+int RepositoryTemplate<T>::findElem(T e)
 {
 	typename list<T>::iterator it;
 	int i = 0;
 	for (it = elem.begin(); it != elem.end(); ++it)
 	{
-		if (*it == e)
+		//if(*it ==e)
+		if ((*it)->toString()== e->toString())
 		{
 			return i;
 		}
@@ -76,9 +98,18 @@ int RepositoryTemplate<T>::getSize()
 }
 
 template<class T>
-void RepositoryTemplate<T>::updateElem(T vechi,T& nou)
+void RepositoryTemplate<T>::updateElem(T vechi,T nou)
 {
-	replace(elem.begin(), elem.end(), vechi, nou);
+	//replace(elem.begin(), elem.end(), vechi, nou);
+	typename list<T>::iterator it;
+	for (it = elem.begin(); it != elem.end(); ++it)
+	{
+
+		if ((*it)->toString() == vechi->toString())
+		{
+			*it = nou->clone();
+		}
+	}
 
 }
 

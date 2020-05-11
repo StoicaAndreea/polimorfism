@@ -170,6 +170,9 @@
     <ClInclude Include="RepositoryFile.h" />
     <ClInclude Include="RepositoryFileCSV.h" />
     <ClInclude Include="RepositoryFileHTML.h" />
+    <ClInclude Include="Serializer.h" />
+    <ClInclude Include="SerializerSerie.h" />
+    <ClInclude Include="SerializerUser.h" />
     <ClInclude Include="Serie.h" />
     <ClInclude Include="SerieValidator.h" />
     <ClInclude Include="Service.h" />
@@ -185,6 +188,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="Series.csv" />
+    <None Include="Series.html" />
     <None Include="Tests.csv" />
     <None Include="Tests.html" />
   </ItemGroup>

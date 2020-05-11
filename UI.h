@@ -7,12 +7,11 @@ public:
 	UI(Service& serv) : s(serv) {};
 	int logIn();
 	void logOut();
-	//void addProj();
-	//void findProj();
+	void addElem();
+	void findElem();
+	void updateElem();
 	void showUI();
-	//void delProj();
+	void delElem();
 	void showAll();
-	//void undoProj();
-	//void updateProj();
 	~UI();
 };

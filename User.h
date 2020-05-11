@@ -12,6 +12,7 @@ public:
 	User(string, char);
 	User(string, string);
 	void fromString(string,char);
+	User* clone();
 	string getUserName();
 	string getPassword();
 	void setUserName(string);

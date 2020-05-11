@@ -17,7 +17,7 @@ public:
 	Phone& operator= (const Phone&);
 	Phone(string,char); //conversion
 	Serie* clone();
-	void fromString(string, char);
+	//void fromString(string, char);
 	/*char* getProducer();
 	char* getModel();
 	int getUnits();*/
@@ -29,7 +29,6 @@ public:
 
 	//bool operator ==(const Phone&);
 	//bool operator <(const Phone&);
-	//void fromString(std::string info);
 	friend ostream& operator <<(ostream& os, Phone e);
 	friend istream& operator >>(istream& is, Phone& e);
 	string toString();

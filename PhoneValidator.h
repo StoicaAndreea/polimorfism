@@ -2,17 +2,17 @@
 #include "Phone.h"
 #include"SerieValidator.h"
 
-//class PhoneException:public SerieException
-//{
-//private:
-//   vector<string>errors;
-//public:
-//    PhoneException(vector<string> _errors);
-//    vector<string> getErrors() const;
-//};
+class PhoneException
+{
+private:
+   vector<string>errors;
+public:
+    PhoneException(vector<string> _errors);
+    vector<string> getErrors() const;
+};
 
-class PhoneValidator: public SerieValidator {
+class PhoneValidator/*: public SerieValidator*/ {
 public:
     PhoneValidator() {}
-    void validate(Phone& m);
+    void validate(Phone* m);
 };

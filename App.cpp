@@ -2,6 +2,8 @@
 //
 #include"Tests.h"
 #include "Phone.h"
+#include "SerializerSerie.h"
+#include "SerializerUser.h"
 #include "Repository.h"
 #include"RepositoryFile.h"
 #include"Service.h"
@@ -17,16 +19,20 @@ int main()
     Tests test;
     test.testDomainPhone();
     test.testDomainDrone();
-    //test.testRepoTemplate();
+    test.testRepoTemplate();
    //test.testRepoFilePhone();
     test.testRepoFileCSV();
-   // test.testRepoFileSerie();
-    //test.testService();
+    test.testRepoFileHTML();
+    test.testRepoFileSerie();
+    test.testService();
     cout << "succes" << endl;
-    //RepositoryFile<Serie> repof("Tests.txt",' ');
-    //RepositoryFileCSV<Serie>repof("Tests.csv");
-    RepositoryFileHTML<Serie>repof("Tests.html");
-    RepositoryFile<User> repo("Users.txt", ' ');
+    SerializerSerie* s = new SerializerSerie();
+    SerializerUser* u = new SerializerUser();
+    //Serializer<User*> u=newSerializer;
+   // RepositoryFile<Serie*> repof("Tests.txt",' ',s);
+   //RepositoryFileCSV<Serie*>repof("Series.csv",s);
+    RepositoryFileHTML<Serie*>repof("Series.html",s);
+    RepositoryFile<User*> repo("Users.txt", ' ', u);
     Service serv(repof, repo);
     UI ui(serv);
     ui.showUI();

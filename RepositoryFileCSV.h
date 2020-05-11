@@ -12,12 +12,13 @@ class RepositoryFileCSV :public RepositoryTemplate<T>
 {
 private:
 	const char* fileName;
+	Serializer<T>* s;
 public:
 	RepositoryFileCSV();
-	RepositoryFileCSV(const char*);
-	int addElem(T&);
-	int deleteElem(T&);
-	void updateElem(T, T&);
+	RepositoryFileCSV(const char*,Serializer<T>* sr);
+	int addElem(T);
+	int deleteElem(T);
+	void updateElem(T, T);
 	void loadFromFile(const char*);
 	void saveToFile();
 	~RepositoryFileCSV();
@@ -29,9 +30,10 @@ RepositoryFileCSV<T>::RepositoryFileCSV() :RepositoryTemplate<T>()
 	fileName = "";
 }
 template<class T>
-RepositoryFileCSV<T>::RepositoryFileCSV(const char* fileName)
+RepositoryFileCSV<T>::RepositoryFileCSV(const char* fileName, Serializer<T>* sr)
 {
 	this->fileName = fileName;
+	s = sr;
 	loadFromFile(fileName);
 }
 
@@ -48,9 +50,8 @@ void RepositoryFileCSV<T>::loadFromFile(const char* fileName)
 		if (inf.is_open()) {
 			while (getline(inf, line))
 			{
-				T ob;
-				ob.fromString(line, ',');
-				RepositoryTemplate<T>::addElem(ob);
+			
+				RepositoryTemplate<T>::addElem(s->fromString(line, ','));
 			}
 			inf.close();
 		}
@@ -68,7 +69,7 @@ void RepositoryFileCSV<T>::saveToFile()
 	std::ofstream out(this->fileName);
 	for (T t : this->getAll())
 	{
-		out << t.toStringDelimiter(',') << '\n';
+		out << t->toStringDelimiter(',') << '\n';
 	}
 	out.close();
 }
@@ -76,11 +77,10 @@ void RepositoryFileCSV<T>::saveToFile()
 template<class T>
 RepositoryFileCSV<T>::~RepositoryFileCSV()
 {
-
 }
 
 template<class T>
-int RepositoryFileCSV<T>::addElem(T& e) {
+int RepositoryFileCSV<T>::addElem(T e) {
 	int r = RepositoryTemplate<T>::addElem(e);
 	if (r != -1) {
 		saveToFile();
@@ -90,17 +90,17 @@ int RepositoryFileCSV<T>::addElem(T& e) {
 }
 
 template<class T>
-int RepositoryFileCSV<T>::deleteElem(T& e) {
+int RepositoryFileCSV<T>::deleteElem(T e) {
 	int r = RepositoryTemplate<T>::deleteElem(e);
+	saveToFile();
 	if (r != 0) {
-		saveToFile();
 		return 0;
 	}
 	else
 		return -1;
 }
 template<class T>
-void RepositoryFileCSV<T>::updateElem(T e, T& n)
+void RepositoryFileCSV<T>::updateElem(T e, T n)
 {
 	RepositoryTemplate<T>::updateElem(e, n);
 	saveToFile();

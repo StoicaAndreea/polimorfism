@@ -3,6 +3,7 @@
 #include <iostream>
 #include<fstream>
 #include "Phone.h"
+#include "Serializer.h"
 #include "Repository.h"
 using namespace std;
 
@@ -13,12 +14,14 @@ class RepositoryFile :public RepositoryTemplate<T>
 private:
 	const char* fileName;
 	char delim;
+	Serializer<T>* s;
+
 public:
 	RepositoryFile();
-	RepositoryFile(const char*, const char);
-	int addElem( T&);
-	int deleteElem(T&);
-	void updateElem(T,T&);
+	RepositoryFile(const char*, const char, Serializer<T>* sr);
+	int addElem( T);
+	int deleteElem(T);
+	void updateElem(T,T);
 	void loadFromFile(const char*, const char);
 	void saveToFile();
 	~RepositoryFile();
@@ -31,9 +34,10 @@ RepositoryFile<T>::RepositoryFile() :RepositoryTemplate<T>()
 	delim = ' ';
 }
 template<class T>
-RepositoryFile<T>::RepositoryFile(const char* fileName, const char delim)
+RepositoryFile<T>::RepositoryFile(const char* fileName, const char delim, Serializer<T>* sr)
 {
 	this->fileName = fileName;
+	s = sr;
 	loadFromFile(fileName, delim);
 }
 
@@ -51,9 +55,7 @@ void RepositoryFile<T>::loadFromFile(const char* fileName, const char delim)
 		if (inf.is_open()) {
 			while (getline(inf, line))
 			{
-				T ob;
-				ob.fromString(line, delim);
-				RepositoryTemplate<T>::addElem(ob);
+				RepositoryTemplate<T>::addElem(s->fromString(line, delim));
 			}
 			inf.close();
 		}
@@ -71,7 +73,7 @@ void RepositoryFile<T>::saveToFile()
 	std::ofstream out(this->fileName);
 	for (T t : this->getAll())
 	{
-		out << t.toStringDelimiter(this->delim)<< '\n';
+		out << t->toStringDelimiter(this->delim)<< '\n';
 	}
 	out.close();
 }
@@ -79,11 +81,10 @@ void RepositoryFile<T>::saveToFile()
 template<class T>
 RepositoryFile<T>::~RepositoryFile()
 {
-
 }
 
 template<class T>
-int RepositoryFile<T>::addElem(T& e) {
+int RepositoryFile<T>::addElem(T e) {
 	int r = RepositoryTemplate<T>::addElem(e);
 	if (r != -1) {
 		saveToFile();
@@ -93,17 +94,17 @@ int RepositoryFile<T>::addElem(T& e) {
 }
 
 template<class T>
-int RepositoryFile<T>::deleteElem(T& e) {
+int RepositoryFile<T>::deleteElem(T e) {
 	int r = RepositoryTemplate<T>::deleteElem(e);
+	saveToFile();
 	if (r != 0) {
-		saveToFile();
 		return 0;
 	}
 	else
 		return -1;
 }
 template<class T>
-void RepositoryFile<T>::updateElem(T e,T& n)
+void RepositoryFile<T>::updateElem(T e,T n)
 {
 	RepositoryTemplate<T>::updateElem(e, n);
 	saveToFile();

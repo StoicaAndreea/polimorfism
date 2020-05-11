@@ -45,17 +45,17 @@ Drone::Drone(string line,char delim) {
 	rotors = stoi(tokens[3]);
 }
 
-void Drone::fromString(string line, char delim) {
-	//Drone(line, delim);
-	vector<string> tokens = splitLine(line, delim);
-	this->producer = new char[tokens[0].length() + 1];
-	strcpy_s(this->producer, tokens[0].length() + 1, tokens[0].c_str());
-
-	this->model = new char[tokens[1].length() + 1];
-	strcpy_s(this->model, tokens[1].length() + 1, tokens[1].c_str());
-	units = stoi(tokens[2]);
-	rotors = stoi(tokens[3]);
-}
+//void Drone::fromString(string line, char delim) {
+//	//Drone(line, delim);
+//	vector<string> tokens = splitLine(line, delim);
+//	this->producer = new char[tokens[0].length() + 1];
+//	strcpy_s(this->producer, tokens[0].length() + 1, tokens[0].c_str());
+//
+//	this->model = new char[tokens[1].length() + 1];
+//	strcpy_s(this->model, tokens[1].length() + 1, tokens[1].c_str());
+//	units = stoi(tokens[2]);
+//	rotors = stoi(tokens[3]);
+//}
 Drone::~Drone() {
 	if (this->producer) {
 		delete[] this->producer;

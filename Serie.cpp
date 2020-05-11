@@ -42,16 +42,16 @@ Serie::Serie(string line,char delim) {
 	units = stoi(tokens[2]);
 }
 
-void Serie::fromString(string line, char delim) {
-	//Serie(line, delim);
-	vector<string> tokens = splitLine(line, delim);
-	this->producer = new char[tokens[0].length() + 1];
-	strcpy_s(this->producer, tokens[0].length() + 1, tokens[0].c_str());
-
-	this->model = new char[tokens[1].length() + 1];
-	strcpy_s(this->model, tokens[1].length() + 1, tokens[1].c_str());
-	units = stoi(tokens[2]);
-}
+//void Serie::fromString(string line, char delim) {
+//	//Serie(line, delim);
+//	vector<string> tokens = splitLine(line, delim);
+//	this->producer = new char[tokens[0].length() + 1];
+//	strcpy_s(this->producer, tokens[0].length() + 1, tokens[0].c_str());
+//
+//	this->model = new char[tokens[1].length() + 1];
+//	strcpy_s(this->model, tokens[1].length() + 1, tokens[1].c_str());
+//	units = stoi(tokens[2]);
+//}
 Serie::~Serie() {
 	if (this->producer) {
 		delete[] this->producer;

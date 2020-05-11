@@ -3,38 +3,83 @@
 #include<string.h>
 using namespace std;
 
-//void UI::addProj() {
-//	Car proj;
-//	cout << "Give the Car:";
-//	cin >> proj;
-//	try {
-//		s.addCar(proj);
-//		cout << "the Car has been successfully added" << endl;
-//	}
-//	catch (exception e) { cout << "exception occuredddd!" << "->"; cout << e.what(); }
-//}
-//
-//
-//
-//void UI::findProj() {
-//	Car proj;
-//	cout << "Give the Car:";
-//	cin >> proj;
-//	int rez = s.findElem(proj);
-//	if (rez >= 0) cout << "The Car has been found!" << endl;
-//	else cout << "The Car has not been found!" << endl;
-//}
-//
-//void UI::delProj() {
-//	Car proj;
-//	cout << "Give the Car:" << endl;;
-//	cin >> proj;
-//	try {
-//		int rez = s.delCar(proj);
-//		if (rez == 0) cout << "the Car has been deleted!" << endl;
-//	}
-//	catch (exception e) { cout << "exception occuredddd!" << "->"; cout << e.what(); }
-//}
+void UI::addElem() {
+	cout << "what yould you like to add? :"<<endl;
+	cout << "	a. Phone" << endl;
+	cout << "	b.Drone" << endl;
+	try {
+	string ras = "";
+	cin >> ras;
+	Serie* ser;
+	if (ras == "a") {
+		try {
+			Phone p;
+			cin >> p;
+			ser = p.clone();
+			s.addElem(ser);
+			delete[]ser;
+		}
+		catch (PhoneException e)
+		{
+			for (int i = 0; i < e.getErrors().size(); i++)
+				cout << e.getErrors()[i];
+		}
+	}
+	else {
+		try {
+			Drone p;
+			cin >> p;
+			ser = p.clone();
+			s.addElem(ser);
+			delete[]ser;
+		}
+		catch (SerieException e) {
+			for (int i = 0; i < e.getErrors().size(); i++)
+				cout << e.getErrors()[i];
+		}
+	}
+	}
+	catch (exception e) { cout << "exception occuredddd!" << "->"; cout << e.what(); }
+}
+
+
+
+void UI::findElem() {
+	string prod;
+	cout << "give the producer: ";
+	cin >> prod;
+	list<Serie*> l = s.findProducer(prod);
+	list <Serie*>::iterator it;
+	for (it = l.begin(); it != l.end(); ++it) {
+		cout << (*it)->toString() << endl;
+	}
+
+}
+
+void UI::delElem() {
+	cout << "what yould you like to delete? :" << endl;
+	cout << "	a. Phone" << endl;
+	cout << "	b.Drone" << endl;
+	try {
+		string ras = "";
+		cin >> ras;
+		Serie* ser;
+		if (ras == "a") {
+			Phone p;
+			cin >> p;
+			ser = p.clone();
+		}
+		else {
+			Drone p;
+			cin >> p;
+			ser = p.clone();
+		}
+		s.deleteElem(ser);
+		cout << "the seria has been successfully deleted" << endl;
+		delete[]ser;
+	}
+	catch (exception e) { cout << "exception occuredddd!" << "->"; cout << e.what(); }
+}
 
 
 int UI::logIn() {
@@ -52,43 +97,45 @@ void UI::logOut() {
 }
 
 void UI::showAll() {
-	list <Phone>::iterator it;
+	//list <Serie*>::iterator it;
 	for (int i = 0; i < s.getSize(); i++)
 	{
-		cout << s.getItemFromPos(i).toString() << endl;;
+		cout << (*s.getItemFromPos(i)).toString() << endl;
 	}
 }
 
-//void UI::updateProj() {
-//	Car proj;
-//	cout << "Give the Car you want to update:";
-//	cin >> proj;
-//	cout << "Give the Car data:" << endl;
-//	char* na = new char[10];
-//	char* nr = new char[10];
-//	char* st = new char[10];
-//	int rez = s.findElem(proj);
-//	if (rez >= 0) {
-//		cout << "name: ";
-//		cin >> na;
-//		cout << "plate number: ";
-//		cin >> nr;
-//		int ok = 0;
-//		while (ok == 0) {
-//			cout << "status: " << endl;
-//			cout << "			a. free" << endl;
-//			cout << "			b.occupied" << endl;
-//			cin >> st;
-//			if ((strcmp(st, "free") == 0) or (strcmp(st, "occupied") == 0)) ok = 1;
-//		}
-//		s.updateCar(proj, na, nr, st);
-//		cout << "The Car has been updated!";
-//	}
-//	else { cout << "The Car has not been found!"; }
-//	delete[] na;
-//	delete[] nr;
-//	delete[] st;
-//}
+void UI::updateElem() {
+	cout << "what yould you like to update? :" << endl;
+	cout << "	a. Phone" << endl;
+	cout << "	b.Drone" << endl;
+	try {
+		string ras = "";
+		cin >> ras;
+		Serie* ser;
+		Serie* nser;
+		if (ras == "a") {
+			Phone p;
+			Phone np;
+			cin >> p;
+			ser = p.clone();
+			cout << "update with:" << endl;
+			cin >> np;
+			nser = np.clone();
+		}
+		else {
+			Drone p,np;
+			cin >> p;
+			ser = p.clone();
+			cout << "update with:" << endl;
+			cin >> np;
+			nser = np.clone();
+		}
+		s.updateElem(ser,nser);
+		delete[]ser;
+		delete[]nser;
+	}
+		catch (exception e) { cout << "exception occuredddd!" << "->"; cout << e.what(); }
+}
 
 void UI::showUI()
 {
@@ -114,10 +161,10 @@ void UI::showUI()
 					cout << "#####################~~ MENU ~~###################" << endl;
 					cout << endl;
 					cout << "OPTIONS: " << endl;
-					/*cout << "	1. Add Car " << endl;
-					cout << "	2. Search Car " << endl;
-					cout << "	3. Delete Car " << endl;
-					cout << "	4. Update Car " << endl;*/
+					cout << "	1. Add " << endl;
+					cout << "	2. Search by producer " << endl;
+					cout << "	3. Delete " << endl;
+					cout << "	4. Update " << endl;
 					cout << "	5. Show " << endl;
 					cout << "	6. Log out" << endl;
 					cout << "	0. EXIT!" << endl;
@@ -127,10 +174,10 @@ void UI::showUI()
 					cout << endl;
 					cout << endl;
 					switch (opt) {
-						//case 1: {addProj(); break; }
-						//case 2: {findProj(); break; }
-						//case 3: {delProj(); break; }
-						//case 4: {updateProj(); break; }
+						case 1: {addElem(); break; }
+						case 2: {findElem(); break; }
+						case 3: {delElem(); break; }
+						case 4: {updateElem(); break; }
 					case 5: {showAll(); break; }
 					case 6: {logOut(); cout << "you have been logged outtttt" << endl; break; }
 					case 0: {gata = true; cout << "BYE BYE..." << endl; }
@@ -139,11 +186,6 @@ void UI::showUI()
 			} else{ cout << "incorrect username or password" << endl; }
 		}
 			else {
-				/*cout << "would you like to try again? " << endl;
-				cout << "		a. yes " << endl;
-				cout << "		b.no" << endl;*/
-				//string rasp;
-				//cin >> rasp;
 				if (r == 'b') gata = true;
 			}
 		}
